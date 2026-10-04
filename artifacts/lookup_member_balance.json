@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+
+  "name": "lookup_member_balance",
+
+  "description": "Look up a member and return the current savings balance.",
+
+  "inputs": {
+    "member_id": {
+      "type": "string",
+      "required": true,
+      "description": "Member identifier supplied at invocation time."
+    }
+  },
+
+  "outputs": {
+    "balance": {
+      "type": "string",
+      "required": false,
+      "description": "Savings balance when the member exists."
+    }
+  },
+
+  "steps": [
+    {
+      "id": "enter_member_id",
+
+      "action": "fill",
+
+      "target": {
+        "strategy": "semantic",
+        "role": null,
+        "name": null,
+        "label": "Member ID",
+        "text": null,
+        "css": null
+      },
+
+      "value": "{{member_id}}",
+
+      "output_name": null,
+
+      "expected_state": null,
+
+      "retry_count": 0
+    },
+
+    {
+      "id": "submit_search",
+
+      "action": "click",
+
+      "target": {
+        "strategy": "semantic",
+        "role": "button",
+        "name": "Search Member",
+        "label": null,
+        "text": null,
+        "css": null
+      },
+
+      "value": null,
+
+      "output_name": null,
+
+      "expected_state": {
+        "kind": "one_of_texts",
+
+        "value": [
+          "Member Details",
+          "No member found",
+          "Permission denied",
+          "Temporary system error."
+        ]
+      },
+
+      "retry_count": 1
+    },
+
+    {
+      "id": "extract_balance",
+
+      "action": "extract",
+
+      "target": {
+        "strategy": "semantic",
+        "role": null,
+        "name": null,
+        "label": null,
+        "text": null,
+        "css": "#savings_balance"
+      },
+
+      "value": null,
+
+      "output_name": "balance",
+
+      "expected_state": null,
+
+      "retry_count": 0
+    }
+  ],
+
+  "checkpoint": {
+    "kind": "one_of_texts",
+
+    "value": [
+      "Member Details",
+      "No member found",
+      "Permission denied"
+    ]
+  }
+}

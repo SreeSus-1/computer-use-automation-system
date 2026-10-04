@@ -476,16 +476,17 @@ http://127.0.0.1:8000
 ```
 
 ---
-
 ## Running LLM Discovery
 
-Open another terminal, activate the virtual environment, and run the discovery command supported by `src.main`.
+Make sure the demo application is running in a separate terminal.
 
-Use the goal:
+Open another terminal, activate the virtual environment, and run:
 
-```text
-Look up member 12345 and return the current savings balance.
+```powershell
+python -m src.main discover --goal "Look up member 12345 and return the current savings balance."
 ```
+
+Discovery uses the configured OpenAI model to observe the live UI and decide which UI action to perform next.
 
 During a successful discovery, the agent:
 
